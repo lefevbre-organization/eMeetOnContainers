@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jitsi-web
+  name: jitsi-web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jitsi-web
+  template:
+    metadata:
+      labels:
+        app: jitsi-web
+    spec:
+      containers:
+      - name: jitsi-web
+        image: kcdominion/lefebvre-jitsi-web:v2
+        imagePullPolicy: Always
+        env:
+        - name: ENABLE_AUTH
+          value: "1"
+        - name: ENABLE_GUESTS
+          value: "1"
+        - name: JIBRI_BREWERY_MUC
+          value: jibribrewery
+        - name: JIBRI_PENDING_TIMEOUT
+          value: "90"
+        - name: JIBRI_RECORDER_PASSWORD
+          value: ead7e81257962ab262066b26dcd40cf7
+        - name: JIBRI_RECORDER_USER
+          value: recorder
+        - name: JIBRI_XMPP_PASSWORD
+          value: 095915bd19a7a505ca39dc4815a6f7d4
+        - name: JIBRI_XMPP_USER
+          value: jibri
+        - name: JICOFO_AUTH_USER
+          value: focus
+        - name: LETSENCRYPT_DOMAIN
+          value: jitsi.elderecho.com
+        - name: LETSENCRYPT_EMAIL
+          value: info@jitsi.com
+        - name: TZ
+          value: America/Guatemala
+        - name: XMPP_AUTH_DOMAIN
+          value: auth.meet.jitsi
+        - name: XMPP_BOSH_URL_BASE
+          value: http://10.102.128.203:5280
+        - name: XMPP_DOMAIN
+          value: meet.jitsi
+        - name: XMPP_GUEST_DOMAIN
+          value: guest.meet.jitsi
+        - name: XMPP_MUC_DOMAIN
+          value: muc.meet.jitsi
+        - name: XMPP_RECORDER_DOMAIN
+          value: recorder.meet.jitsi
+        ports:
+        - containerPort: 80
+        - containerPort: 443
